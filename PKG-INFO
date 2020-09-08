@@ -1,0 +1,19 @@
+Metadata-Version: 0.1
+Name: uiautomator2library
+Version: 0.1
+Summary: Robot Framework Android Test Library Based on Python uiautomator2
+Home-page: https://gitee.com/
+Author:
+Author-email:
+License: MIT
+Description: 
+
+            
+Platform: any
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Software Development :: Testing
