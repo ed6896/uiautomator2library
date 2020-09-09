@@ -2,8 +2,8 @@
 
 
 """
-定位符参数**kwargs: key=value
-key的范围text,textContains,textMatches,textStartsWith,
+**kwargs: key=value
+key：text,textContains,textMatches,textStartsWith,
         className,classNameMatches,
         description,descriptionContains,descriptionMatches,descriptionStartsWith,
         checkable,checked,
@@ -14,7 +14,8 @@ key的范围text,textContains,textMatches,textStartsWith,
         index,instance
 e.g:
     ui = UiActions()
-    ui.find_element(textContains="测试")
+    ui.connect_device()
+    ui.find_element(textContains="test")
 """
 from __future__ import absolute_import
 # from .utils import Mobile
