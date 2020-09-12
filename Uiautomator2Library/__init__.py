@@ -2,8 +2,8 @@
 
 
 """
-**kwargs: key=value
-key：text,textContains,textMatches,textStartsWith,
+param locator **kwargs: key=value
+key: text,textContains,textMatches,textStartsWith,
         className,classNameMatches,
         description,descriptionContains,descriptionMatches,descriptionStartsWith,
         checkable,checked,
@@ -15,11 +15,14 @@ key：text,textContains,textMatches,textStartsWith,
 e.g:
     ui = UiActions()
     ui.connect_device()
-    ui.find_element(textContains="test")
+    ui.find_element_by_locator(textContains="test")
+
+    or use this in RobotFramework
+    | Connect Device | 192.168.1.100
+    | ${variable} | Find Element By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+
 """
 from __future__ import absolute_import
-# from .utils import Mobile
-
 from .u2keywords import DeviceActions
 from .u2keywords import UiActions
 from .u2keywords import XpathActions
