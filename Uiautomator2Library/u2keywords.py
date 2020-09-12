@@ -19,6 +19,20 @@ class Actions:
         return Actions._instance
 
     def connect_device(self, serial_url=None):
+        """
+        Connect to phone device
+        :param serial_url: device serial or WiFi url, default connect by usb
+        :return:
+
+        Example:
+            | Connect Device  |
+            or
+            | Connect Device  | serial
+            or
+            | Connect Device  | 192.168.1.100
+            or
+            | Connect Device  | http://192.168.1.100
+        """
         if self.device is None:
             self.device = u2.connect(serial_url)
 
@@ -35,14 +49,14 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | Clear Ui Text  | UiObject
+            | Clear element Text By Locator  | UiObject
             or
-            | Clear Ui Text  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Clear element Text By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | Clear Ui Text  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Clear element Text By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | Clear Ui Text  | 3 | &{locator}
+            | Clear element Text By Locator  | 3 | &{locator}
         """
         if len(args) == 1 and isinstance(args[0], u2.UiObject) and not kwargs:
             args[0].clear_text()
@@ -61,16 +75,16 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | Click Ui  | UiObject
+            | Click Element By Locator  | UiObject
             or
-            | Click Ui  | UiObject | 3
+            | Click Element By Locator  | UiObject | 3
             or
-            | Click Ui  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Click Element By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | Click Ui  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Click Element By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | Click Ui  | 3 | &{locator}
+            | Click Element By Locator  | 3 | &{locator}
         """
         if len(args) == 1 and isinstance(args[0], u2.UiObject):
             args[0].click_exists(timeout=10)
@@ -100,14 +114,14 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | ${variable} | Ui Is existed  | UiObject
+            | ${variable} | Element Is Existed By Locator  | UiObject
             or
-            | ${variable} | Ui Is existed  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Element Is Existed By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Ui Is existed  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Element Is Existed By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Ui Is existed  | 3 | &{locator}
+            | ${variable} | Element Is Existed By Locator  | 3 | &{locator}
         """
         if len(args) == 1 and isinstance(args[0], u2.UiObject):
             return args[0].exists()
@@ -139,12 +153,12 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | ${variable} | Find Ui  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Find Ui  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{variable}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Ui  | 3 | &{locator}
+            | ${variable} | Find Element By Locator  | 3 | &{locator}
         """
         self.device(**kwargs).must_wait(timeout=timeout)
         return self.device(**kwargs)
@@ -159,9 +173,9 @@ class UiActions(Actions):
         :return: UiObject
 
         Example:
-            | ${variable} | Find Ui By Direction | UiObject | left | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element By Locator With Direction | UiObject | left | resourceId=com.example.test:id/username   | className=android.widget.EditText
             &{variable}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Ui By Direction  |  UiObject | left | &{locator}
+            | ${variable} | Find Element By Locator With Direction  |  UiObject | left | &{locator}
         """
         assert direction in ["left", "right", "up", "down"]
         if direction == "left":
@@ -185,16 +199,16 @@ class UiActions(Actions):
             return the specified UiObject with kwargs locator under parent UiObject
 
         Example:
-            | ${variable} | Find Child Ui  | UiObject
+            | ${variable} | Find Element Child By Locator  | UiObject
             or
-            | ${variable} | Find Child Ui  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element Child By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Find Child Ui  | UiObject | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element Child By Locator  | UiObject | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Find Child Ui  | 3 | UiObject | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Find Element Child By Locator  | 3 | UiObject | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Child Ui  | UiObject | &{locator}
+            | ${variable} | Find Element Child By Locator  | UiObject | &{locator}
         """
         if len(args) == 1 and isinstance(args[0], u2.UiObject):
             if kwargs:
@@ -234,12 +248,12 @@ class UiActions(Actions):
         :return: child UiObject
 
         Example:
-            | ${variable} | Find Child Ui By Description  | parent | description
+            | ${variable} | Find Element Child By Locator With Description  | parent | description
             or
-            | ${variable} | Find Child Ui By Description  | parent | description | resourceId=com.example.test:id/username
+            | ${variable} | Find Element Child By Locator With Description  | parent | description | resourceId=com.example.test:id/username
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Child Ui By Description  | parent | description | &{locator}
+            | ${variable} | Find Element Child By Locator With Description  | parent | description | &{locator}
         """
 
         kwargs["allow_scroll_search"] = True
@@ -255,12 +269,12 @@ class UiActions(Actions):
         :return: child UiObject
 
         Example:
-            | ${variable} | Find Child Ui By Index  | parent | 1
+            | ${variable} | Find Element Child By Locator With Index  | parent | 1
             or
-            | ${variable} | Find Child Ui By Index  | parent | 1 | resourceId=com.example.test:id/username
+            | ${variable} | Find Element Child By Locator With Index  | parent | 1 | resourceId=com.example.test:id/username
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Child Ui By Index  | parent | 1 | &{locator}
+            | ${variable} | Find Element Child By Locator With Index  | parent | 1 | &{locator}
         """
         return parent.child_by_instance(index, **kwargs)
 
@@ -274,12 +288,12 @@ class UiActions(Actions):
         :return: child UiObject
 
         Example:
-            | ${variable} | Find Child Ui By Text  | parent | text
+            | ${variable} | Find Element Child By Locator With Text  | parent | text
             or
-            | ${variable} | Find Child Ui By Text  | parent | text | resourceId=com.example.test:id/username
+            | ${variable} | Find Element Child By Locator With Text  | parent | text | resourceId=com.example.test:id/username
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Child Ui By Text  | parent | text | &{locator}
+            | ${variable} | Find Element Child By Locator With Text  | parent | text | &{locator}
         """
 
         kwargs["allow_scroll_search"] = True
@@ -294,12 +308,12 @@ class UiActions(Actions):
         :return: sibling UiObject
 
         Example:
-            ${ui_object}    Find Ui     resourceId=com.example.test:id/login
+            | ${ui_object} | Find Element By Locator | resourceId=com.example.test:id/login
 
-            | ${variable} | Find Sibling Ui  | ${ui_object} | resourceId=com.example.test:id/username
+            | ${variable} | Find Element Sibling By Locator  | ${ui_object} | resourceId=com.example.test:id/username
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Find Sibling Ui  | ${ui_object} | &{locator}
+            | ${variable} | Find Element Sibling By Locator  | ${ui_object} | &{locator}
         """
         return ui.sibling(**kwargs)
 
@@ -316,16 +330,16 @@ class UiActions(Actions):
             2. if attribute is not none, return UiObject attribute value
 
         Example:
-            | ${variable} | Get Attribute By Locator  | UiObject
+            | ${variable} | Get Element Attribute By Locator  | UiObject
             or
-            | ${variable} | Get Attribute By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Element Attribute By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Get Attribute By Locator  | 3 | packageName | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Element Attribute By Locator  | 3 | packageName | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Get Attribute By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Element Attribute By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Get Attribute By Locator  | 3 | packageName | &{locator}
+            | ${variable} | Get Element Attribute By Locator  | 3 | packageName | &{locator}
 
         """
         attribute = ["bounds", "childCount", "className", "contentDescription", "packageName", "resourceName", "text",
@@ -371,14 +385,14 @@ class UiActions(Actions):
         :return: text string
 
         Example:
-            | ${variable} | Get Ui Text  | UiObject
+            | ${variable} | Get Element Text By Locator  | UiObject
             or
-            | ${variable} | Get Ui Text  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Element Text By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Get Ui Text  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Element Text By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Get Ui Text  | 3 | &{locator}
+            | ${variable} | Get Element Text By Locator  | 3 | &{locator}
         """
         if len(args) == 1 and isinstance(args[0], u2.UiObject):
             return args[0].get_text(timeout=10)
@@ -408,12 +422,12 @@ class UiActions(Actions):
         :return: int
 
         Example:
-            | ${variable} | Get Ui Count  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Elements Count By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | ${variable} | Get Ui Count  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | ${variable} | Get Elements Count By Locator  | 3 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | ${variable} | Get Ui Count  | 3 | &{locator}
+            | ${variable} | Get Elements Count By Locator  | 3 | &{locator}
         """
         ui_object = self.find_element_by_locator(timeout, **kwargs)
         return len(ui_object)
@@ -426,12 +440,12 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | Long Click Ui  | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Long Click Element By Locator  | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
-            | Long Click Ui  | 2 | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Long Click Element By Locator  | 2 | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | Long Click Ui  | 2 | &{locator}
+            | Long Click Element By Locator  | 2 | &{locator}
         """
         self.device(**kwargs).long_click(duration=duration)
 
@@ -493,12 +507,12 @@ class UiActions(Actions):
         :return: int
 
         Example:
-            | Set Text To Ui  | UiObject |  text
+            | Set Element Text By Locator  | UiObject |  text
             or
-            | Set Text To Ui  | text | resourceId=com.example.test:id/username   | className=android.widget.EditText
+            | Set Element Text By Locator  | text | resourceId=com.example.test:id/username   | className=android.widget.EditText
             or
             &{locator}        resourceId=com.example.test:id/username    className=android.widget.EditText
-            | Set Text To Ui  | text | &{locator}
+            | Set Element Text By Locator  | text | &{locator}
         """
         if len(args) == 1 and not isinstance(args[0], u2.UiObject) and kwargs:
             self.device(**kwargs).set_text(str(args[0]), timeout=5)
@@ -525,9 +539,9 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | ${variable} | Wait Ui Visible  | resourceId=com.example.test:id/username
+            | ${variable} | Wait Element Visible By Locator  | resourceId=com.example.test:id/username
             or
-            | ${variable} | Wait Ui Visible  | 5 | resourceId=com.example.test:id/username
+            | ${variable} | Wait Element Visible By Locator  | 5 | resourceId=com.example.test:id/username
         """
         if self.device(**kwargs).wait(timeout=timeout):
             return True
@@ -542,9 +556,9 @@ class UiActions(Actions):
         :return:
 
         Example:
-            | ${variable} | Wait Ui Invisible  | resourceId=com.example.test:id/username
+            | ${variable} | Wait Element Invisible By Locator  | resourceId=com.example.test:id/username
             or
-            | ${variable} | Wait Ui Invisible  | 5 | resourceId=com.example.test:id/username
+            | ${variable} | Wait Element Invisible By Locator  | 5 | resourceId=com.example.test:id/username
         """
         if self.device(**kwargs).wait_gone(timeout=timeout):
             return True
@@ -684,26 +698,15 @@ class DeviceActions(Actions):
         """
         return [ele.text for ele in self.device.xpath('//android.widget.TextView').all()]
 
-    def dev_get_toast_message(self, message=None, timeout=5) -> str or bool:
+    def dev_get_toast_message(self) -> str or bool:
         """
-        Gets toast message, or match the toast message
-        :param message: toast message need to match
-        :param timeout: default 5 seconds
+        Gets toast message
         :return:
 
         Example:
             | ${variable} | Dev Get Toast Message
-            or
-            | ${variable} | Dev Get Toast Message | message
         """
-        if message:
-            toast = self.device.toast.get_message(wait_timeout=timeout)
-            if toast == message:
-                return True
-            else:
-                return False
-        else:
-            return self.device.toast.get_message(wait_timeout=timeout)
+        return self.device.toast.get_message()
 
     def dev_get_window_size(self):
         """
@@ -842,11 +845,11 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | Click By Xpath | xmlElement
+            | Click Element By Xpath | xmlElement
             or
-            | Click By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | Click Element By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | Click By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | Click Element By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if isinstance(xpath, u2.xpath.XMLElement):
             xpath.click()
@@ -861,11 +864,11 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | Long Click By Xpath | xmlElement
+            | Long Click Element By Xpath | xmlElement
             or
-            | Long Click By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | Long Click Element By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | Long Click By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | Long Click Element By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if isinstance(xpath, u2.xpath.XMLElement):
             xpath.long_click()
@@ -880,9 +883,9 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | ${variable} | Xpath Is Exists | //*[@resource-id="com.android.demo:id/login"]
+            | ${variable} | Element Is Existed By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | ${variable} | Xpath Is Exists | //*[@resource-id="com.android.demo:id/login"] | 5
+            | ${variable} | Element Is Existed By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if self.find_element_by_xpath(xpath, timeout=timeout):
             return self.device.xpath(xpath).exists
@@ -895,9 +898,9 @@ class XpathActions(Actions):
         :return: XMLElement
 
         Example
-            | ${variable} | Find By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | ${variable} | Find Element By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | ${variable} | Find By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | ${variable} | Find Element By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         return self.device.xpath(xpath).get(timeout=timeout)
 
@@ -909,9 +912,9 @@ class XpathActions(Actions):
         :return: XMLElement list
 
         Example
-            | @{variable} | Find All By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | @{variable} | Find Elements By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | @{variable} | Find All By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | @{variable} | Find Elements By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if self.find_element_by_xpath(xpath, timeout=timeout):
             return self.device.xpath(xpath).all()
@@ -924,11 +927,11 @@ class XpathActions(Actions):
         :return: XMLElement
 
         Example
-            | @{variable} | Find Parent By Xpath | xmlElement
+            | @{variable} | Find Parent Element By Xpath | xmlElement
             or
-            | @{variable} | Find Parent By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | @{variable} | Find Parent Element By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | @{variable} | Find Parent By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | @{variable} | Find Parent Element By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if isinstance(xpath, u2.xpath.XMLElement):
             return xpath.parent()
@@ -948,16 +951,16 @@ class XpathActions(Actions):
             2. if attribute is not none, return attribute value
 
         Example:
-            | ${variable} | Get Attribute By Xpath  | xmlElement
+            | ${variable} | Get Element Attribute By Xpath  | xmlElement
             or
-            | ${variable} | Get Attribute By Xpath  | xmlElement | text
+            | ${variable} | Get Element Attribute By Xpath  | xmlElement | text
             or
-            | ${variable} | Get Attribute By Xpath  | //*[@resource-id="com.android.demo:id/login"]
+            | ${variable} | Get Element Attribute By Xpath  | //*[@resource-id="com.android.demo:id/login"]
             or
-            | ${variable} | Get Attribute By Xpath  | //*[@resource-id="com.android.demo:id/login"] | text   | 3
+            | ${variable} | Get Element Attribute By Xpath  | //*[@resource-id="com.android.demo:id/login"] | text   | 3
             or
             &{locator}        //*[@resource-id="com.android.demo:id/login"]
-            | ${variable} | Get Attribute By Xpath  | 3 | packageName | &{locator}
+            | ${variable} | Get Element Attribute By Xpath  | 3 | packageName | &{locator}
         """
 
         if isinstance(xpath, u2.xpath.XMLElement):
@@ -980,11 +983,11 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | ${variable} | Get Text By Xpath | xmlElement
+            | ${variable} | Get Element Text By Xpath | xmlElement
             or
-            | ${variable} | Get Text By Xpath | //*[@resource-id="com.android.demo:id/login"]
+            | ${variable} | Get Element Text By Xpath | //*[@resource-id="com.android.demo:id/login"]
             or
-            | ${variable} | Get Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
+            | ${variable} | Get Element Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | 5
         """
         if isinstance(xpath, u2.xpath.XMLElement):
             return xpath.text()
@@ -1001,9 +1004,9 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | Set Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
+            | Set Element Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
             or
-            | Set Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
+            | Set Element Text By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
         """
         if self.find_element_by_xpath(xpath, timeout=timeout):
             self.device.xpath(xpath).set_text(text)
@@ -1015,9 +1018,9 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | Wait Visible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
+            | Wait Element Visible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
             or
-            | Wait Visible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
+            | Wait Element Visible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
         """
         if self.device.xpath(xpath).wait(timeout):
             return True
@@ -1031,9 +1034,9 @@ class XpathActions(Actions):
         :return:
 
         Example
-            | Wait Invisible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
+            | Wait Element Invisible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text
             or
-            | Wait Invisible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
+            | Wait Element Invisible By Xpath | //*[@resource-id="com.android.demo:id/login"] | text | 5
         """
         if self.device.xpath(xpath).wait_gone(timeout):
             return True
