@@ -564,7 +564,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | App Clear | package name
+            | Dev App Clear | package name
         """
         self.device.app_clear(package)
 
@@ -582,7 +582,7 @@ class DeviceActions(Actions):
             }
 
         Example:
-            | &{variable} | App Info | package name
+            | &{variable} | Dev App Info | package name
         """
         return self.device.app_info(package)
 
@@ -593,7 +593,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | App Install | package name
+            | Dev App Install | package name
         """
         self.device.app_install(data)
 
@@ -604,7 +604,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | App Start | package name
+            | Dev App Start | package name
         """
         self.device.app_start(package_name=package, wait=True, stop=True)
 
@@ -615,7 +615,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | App Stop | package name
+            | Dev App Stop | package name
         """
         self.device.app_stop(package)
 
@@ -626,7 +626,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | App Uninstall | package name
+            | Dev App Uninstall | package name
         """
         self.device.app_uninstall(package)
 
@@ -638,7 +638,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Click Screen | x | y
+            | Dev Click Screen | x | y
         """
         self.device.click(x, y)
 
@@ -648,7 +648,7 @@ class DeviceActions(Actions):
         :return: dict(package, activity, pid?)
 
         Example:
-            | &{variable} | Current App
+            | &{variable} | Dev Current App
         """
         return self.device.app_current()
 
@@ -660,7 +660,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Double Click Screen | x | y
+            | Dev Double Click Screen | x | y
         """
         self.device.double_click(x, y)
 
@@ -670,7 +670,7 @@ class DeviceActions(Actions):
         :return: information dict
 
         Example:
-            | &{variable} | Get Device Info
+            | &{variable} | Dev Get Device Info
         """
         return self.device.dev_info
 
@@ -680,19 +680,30 @@ class DeviceActions(Actions):
         :return: text list
 
         Example:
-            | @{variable} | Get Page Text
+            | @{variable} | Dev Get Page Text
         """
         return [ele.text for ele in self.device.xpath('//android.widget.TextView').all()]
 
-    def dev_get_toast_message(self) -> str:
+    def dev_get_toast_message(self, message=None, timeout=5) -> str or bool:
         """
-        Gets toast message
-        :return: text
+        Gets toast message, or match the toast message
+        :param message: toast message need to match
+        :param timeout: default 5 seconds
+        :return:
 
         Example:
-            | ${variable} | Get Toast Message
+            | ${variable} | Dev Get Toast Message
+            or
+            | ${variable} | Dev Get Toast Message | message
         """
-        return self.device.toast.get_message()
+        if message:
+            toast = self.device.toast.get_message(wait_timeout=timeout)
+            if toast == message:
+                return True
+            else:
+                return False
+        else:
+            return self.device.toast.get_message(wait_timeout=timeout)
 
     def dev_get_window_size(self):
         """
@@ -700,7 +711,7 @@ class DeviceActions(Actions):
         :return: size tuple
 
         Example:
-            | ${variable} | Get Window Size
+            | ${variable} | Dev Get Window Size
         """
         return self.device.window_size()
 
@@ -713,9 +724,9 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Long Click Screen | x | y
+            | Dev Long Click Screen | x | y
             or
-            | Long Click Screen | x | y | 2
+            | Dev Long Click Screen | x | y | 2
         """
         self.device.long_click(x, y, duration)
 
@@ -729,7 +740,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Press Key | home
+            | Dev Press Key | home
         """
         assert key in ["home", "back", "left", "right", "up", "down", "center", "menu", "search", "enter",
                        "delete", "del", "recent", "volume_up", "volume_down", "volume_mute", "camera", "power"]
@@ -742,7 +753,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Screenshot | C:\\Users\\screenshot.png
+            | Dev Screenshot | C:\\Users\\screenshot.png
         """
         return self.device.screenshot(filename)
 
@@ -753,7 +764,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Scroll To Deep End |
+            | Dev Scroll To Deep End |
         """
         a_txt = []
         while True:
@@ -771,7 +782,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Show Float Window
+            | Dev Show Float Window
         """
         self.device.show_float_window()
 
@@ -786,7 +797,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Swipe Screen | 600 | 800 | 600 | 80 | 30
+            | Dev Swipe Screen | 600 | 800 | 600 | 80 | 30
         """
         self.device.swipe(fx, fy, tx, ty, steps=steps)
 
@@ -797,7 +808,7 @@ class DeviceActions(Actions):
         :return:
 
         Example:
-            | Turn Screen | True
+            | Dev Turn Screen | True
         """
         if status:
             self.device.screen_on()
@@ -811,7 +822,7 @@ class DeviceActions(Actions):
         :return: raise TimeoutError
 
         Example:
-            | Wait Activity | com.android.activity.DemoActivity
+            | Dev Wait Activity | com.android.activity.DemoActivity
         """
         if self.device.wait_activity(activity):
             return True
