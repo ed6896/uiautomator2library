@@ -1042,3 +1042,7 @@ class XpathActions(Actions):
             return True
         else:
             raise TimeoutError
+
+
+class Driver(UiActions, DeviceActions, XpathActions):
+    pass
